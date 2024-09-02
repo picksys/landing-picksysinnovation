@@ -1,0 +1,294 @@
+/* Components.css */
+
+/* Reseteo básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilos generales */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  position: relative;
+  z-index: 0;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/ntbk_close.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;
+  opacity: 0.5; /* Ajusta la opacidad según tu preferencia */
+}
+
+/* Resto del código CSS permanece igual */
+
+
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #333;
+  color: #fff;
+}
+
+header .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 100px 20px;
+  background-size: cover;
+  background-position: center;
+  color: #000000;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #000000;
+  text-decoration: none;
+  border-radius: 5px;
+  
+}
+
+/* About Us Section */
+.about-us {
+  padding: 60px 20px;
+  background-color: rgba(255, 255, 255, 0.3); /* Fondo blanco semitransparente */
+  text-align: center;
+}
+
+.about-us-content {
+  max-width: 800px;
+  margin: 0 auto;
+  color: #000000; /* Color de texto */
+}
+
+.about-us h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #000000;
+}
+
+.about-us p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #000000;
+  margin-bottom: 20px;
+}
+
+
+.services {
+  padding: 50px 20px;
+  background-color: #ffffff;
+}
+
+.services h2 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 2rem;
+}
+
+.services .service-list {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.services .service-item {
+  flex: 1 1 30%;
+  padding: 20px;
+  margin: 10px;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.contact {
+  padding: 50px 20px;
+  background-color: #f4f4f4;
+}
+
+.contact h2 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 2rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+input, textarea {
+  width: 100%;
+  max-width: 500px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button[type="submit"] {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #333;
+  color: #fff;
+}
+
+footer a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.service-item {
+  margin-bottom: 30px;
+}
+
+.service-item h3 {
+  font-size: 1.5rem;
+  color: var(--secondary-color);
+}
+
+.service-item p {
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+.service-item button {
+  background-color: var(--primary-color);
+  color: #333;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.service-item button:hover {
+  background-color: darken(var(--primary-color), 10%);
+}
+
+.service-details {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+.hero {
+  padding: 50px 20px;
+  background-color: rgba(158, 158, 158, 0.1); /* Fondo blanco semitransparente */
+}
+
+.services {
+  padding: 50px 20px;
+  background-color: rgba(179, 177, 177, 0.2); /* Fondo blanco semitransparente */
+}
+
+.contact {
+  padding: 50px 20px;
+  background-color: rgba(255, 255, 255, 0.3); /* Fondo blanco semitransparente */
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .services .service-item {
+    flex: 1 1 100%;
+    margin: 10px 0;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .cta-button {
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 50px 20px;
+  }
+
+  .hero h1 {
+    font-size: 1.5rem;
+  }
+
+  .hero p {
+    font-size: 0.9rem;
+  }
+
+  .cta-button {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+
+  .services .service-item {
+    padding: 15px;
+  }
+}
