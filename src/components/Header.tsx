@@ -3,7 +3,7 @@ function Header() {
     <header>
       
       <div className="logo">
-      <img src="src/assets/logo2.png"  width="120" height="60" />
+      <img src="../assets/logo2.png"  width="120" height="60" />
       </div>
       <nav>
         <ul>
