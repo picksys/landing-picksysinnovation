@@ -1,9 +1,11 @@
+import logo2 from '../assets/logo2.png';
+
 function Header() {
   return (
     <header>
       
       <div className="logo">
-      <img src="../assets/logo2.png"  width="120" height="60" />
+      <img src={logo2}  width="120" height="60" />
       </div>
       <nav>
         <ul>
