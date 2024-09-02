@@ -1,27 +1,4 @@
-import React, { useState } from 'react';
-
 function Contact() {
-  const [formData, setFormData] = useState({
-    name: '',
-    lastName: '',
-    phone: '',
-    email: '',
-    company: '',
-    description: ''
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Aquí puedes agregar la lógica para enviar los datos del formulario.
-    console.log(formData);
-  };
 
   return (
     <section id="contact" className="contact">

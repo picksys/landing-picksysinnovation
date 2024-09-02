@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState, CSSProperties } from 'react';
 
 // Estilos CSS en línea
-const styles = {
+const styles: { [key: string]: CSSProperties } = {
   serviceItem: {
     border: '1px solid #ddd',
     padding: '16px',
@@ -9,7 +9,7 @@ const styles = {
     borderRadius: '8px',
     backgroundColor: '#E5F5F2', // Fondo no transparente
     transition: 'box-shadow 0.3s ease',
-    position: 'relative',
+    position: 'relative', // Tipo 'relative'
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', // Sombra sutil por defecto
   },
   serviceItemHover: {
@@ -27,7 +27,7 @@ const styles = {
     display: 'block',
     marginLeft: 'auto',
     marginRight: 'auto',
-    textAlign: 'center',
+    textAlign: 'center', // Tipo 'center'
     fontSize: '14px', // Tamaño de fuente más pequeño
   },
   toggleDetailsButtonHover: {
@@ -62,7 +62,7 @@ function ServiceItem({ title, description, details }: ServiceItemProps) {
   return (
     <div
       style={styles.serviceItem}
-      onMouseEnter={(e) => e.currentTarget.style.boxShadow = styles.serviceItemHover.boxShadow}
+      onMouseEnter={(e) => e.currentTarget.style.boxShadow = styles.serviceItemHover.boxShadow ?? ''}
       onMouseLeave={(e) => e.currentTarget.style.boxShadow = ''}
     >
       <h3>{title}</h3>
@@ -70,12 +70,12 @@ function ServiceItem({ title, description, details }: ServiceItemProps) {
       <button
         style={styles.toggleDetailsButton}
         onMouseEnter={(e) => {
-          e.currentTarget.style.backgroundColor = styles.toggleDetailsButtonHover.backgroundColor;
-          e.currentTarget.style.color = styles.toggleDetailsButtonHover.color;
+          e.currentTarget.style.backgroundColor = styles.toggleDetailsButtonHover.backgroundColor ?? '';
+          e.currentTarget.style.color = styles.toggleDetailsButtonHover.color ?? '';
         }}
         onMouseLeave={(e) => {
-          e.currentTarget.style.backgroundColor = styles.toggleDetailsButton.backgroundColor;
-          e.currentTarget.style.color = styles.toggleDetailsButton.color;
+          e.currentTarget.style.backgroundColor = styles.toggleDetailsButton.backgroundColor ?? '';
+          e.currentTarget.style.color = styles.toggleDetailsButton.color ?? '';
         }}
         onClick={handleToggleDetails}
       >
