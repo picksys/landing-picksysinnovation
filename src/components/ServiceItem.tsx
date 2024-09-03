@@ -1,38 +1,37 @@
 import { useState, CSSProperties } from 'react';
 
-// Estilos CSS en línea
 const styles: { [key: string]: CSSProperties } = {
   serviceItem: {
     border: '1px solid #ddd',
     padding: '16px',
     margin: '16px 0',
     borderRadius: '8px',
-    backgroundColor: '#E5F5F2', // Fondo no transparente
+    backgroundColor: '#E5F5F2',
     transition: 'box-shadow 0.3s ease',
-    position: 'relative', // Tipo 'relative'
-    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', // Sombra sutil por defecto
+    position: 'relative',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
   },
   serviceItemHover: {
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
   },
   toggleDetailsButton: {
-    backgroundColor: 'transparent', // Botón transparente
-    color: 'black', // Color del texto del botón
-    border: 'none', // Sin bordes
-    padding: '4px 8px', // Botón más pequeño
+    backgroundColor: 'transparent',
+    color: 'black',
+    border: 'none',
+    padding: '4px 8px',
     borderRadius: '4px',
     cursor: 'pointer',
     marginTop: '8px',
-    transition: 'background-color 0.3s ease, color 0.3s ease', // Transiciones suaves
+    transition: 'background-color 0.3s ease, color 0.3s ease',
     display: 'block',
     marginLeft: 'auto',
     marginRight: 'auto',
-    textAlign: 'center', // Tipo 'center'
-    fontSize: '14px', // Tamaño de fuente más pequeño
+    textAlign: 'center',
+    fontSize: '14px',
   },
   toggleDetailsButtonHover: {
-    backgroundColor: '#007bff', // Fondo al pasar el ratón
-    color: '#black', // Texto negro al pasar el ratón
+    backgroundColor: '#007bff',
+    color: '#black',
   },
   details: {
     maxHeight: '0',
@@ -41,7 +40,7 @@ const styles: { [key: string]: CSSProperties } = {
     transition: 'max-height 0.5s ease, opacity 0.5s ease',
   },
   detailsShow: {
-    maxHeight: '200px', // Ajusta según el contenido
+    maxHeight: '500px', // Incrementado para acomodar más contenido
     opacity: '1',
   },
 };
@@ -63,7 +62,7 @@ function ServiceItem({ title, description, details }: ServiceItemProps) {
     <div
       style={styles.serviceItem}
       onMouseEnter={(e) => e.currentTarget.style.boxShadow = styles.serviceItemHover.boxShadow ?? ''}
-      onMouseLeave={(e) => e.currentTarget.style.boxShadow = ''}
+      onMouseLeave={(e) => e.currentTarget.style.boxShadow = styles.serviceItem.boxShadow ?? ''}
     >
       <h3>{title}</h3>
       <p>{description}</p>
