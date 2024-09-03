@@ -98,11 +98,7 @@ nav a {
 }
 
 /* About Us Section */
-.about-us {
-  padding: 60px 20px;
-  background-color: rgba(255, 255, 255, 0.3); /* Fondo blanco semitransparente */
-  text-align: center;
-}
+
 
 .about-us-content {
   max-width: 800px;
@@ -199,17 +195,18 @@ footer a {
 }
 
 .service-item {
+  color: #000;
   margin-bottom: 30px;
 }
 
 .service-item h3 {
   font-size: 1.5rem;
-  color: var(--secondary-color);
+  color: #000;
 }
 
 .service-item p {
   font-size: 1rem;
-  color: var(--text-color);
+  color: #000;
 }
 
 .service-item button {
@@ -229,23 +226,31 @@ footer a {
 .service-details {
   margin-top: 10px;
   font-size: 0.9rem;
-  color: var(--text-color);
+  color: #000;
   line-height: 1.5;
 }
 
+
 .hero {
   padding: 50px 20px;
-  background-color: rgba(158, 158, 158, 0.1); /* Fondo blanco semitransparente */
+  background-color: rgb(255, 255, 255, 0.3); /* Fondo blanco semitransparente */
 }
+
+.about-us {
+  padding: 60px 20px;
+  background-color: rgb(255, 255, 255, 0.4); /* Fondo blanco semitransparente */
+  text-align: center;
+}
+
 
 .services {
   padding: 50px 20px;
-  background-color: rgba(179, 177, 177, 0.2); /* Fondo blanco semitransparente */
+  background-color: rgb(255, 255, 255, 0.3); /* Fondo blanco semitransparente */
 }
 
 .contact {
   padding: 50px 20px;
-  background-color: rgba(255, 255, 255, 0.3); /* Fondo blanco semitransparente */ 
+  background-color: rgb(255, 255, 255, 0.4); /* Fondo blanco semitransparente */
 }
 
 /* Media Queries */

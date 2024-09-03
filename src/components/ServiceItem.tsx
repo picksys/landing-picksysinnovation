@@ -17,7 +17,7 @@ const styles: { [key: string]: CSSProperties } = {
   },
   toggleDetailsButton: {
     backgroundColor: 'transparent', // Botón transparente
-    color: '#007bff', // Color del texto del botón
+    color: 'black', // Color del texto del botón
     border: 'none', // Sin bordes
     padding: '4px 8px', // Botón más pequeño
     borderRadius: '4px',
@@ -32,7 +32,7 @@ const styles: { [key: string]: CSSProperties } = {
   },
   toggleDetailsButtonHover: {
     backgroundColor: '#007bff', // Fondo al pasar el ratón
-    color: '#fff',
+    color: '#black', // Texto negro al pasar el ratón
   },
   details: {
     maxHeight: '0',
