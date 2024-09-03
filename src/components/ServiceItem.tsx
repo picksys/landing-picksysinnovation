@@ -2,6 +2,7 @@ import { useState, CSSProperties } from 'react';
 
 const styles: { [key: string]: CSSProperties } = {
   serviceItem: {
+    color: 'black',
     border: '1px solid #ddd',
     padding: '16px',
     margin: '16px 0',
@@ -12,6 +13,7 @@ const styles: { [key: string]: CSSProperties } = {
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
   },
   serviceItemHover: {
+    color: 'black',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
   },
   toggleDetailsButton: {
@@ -31,15 +33,17 @@ const styles: { [key: string]: CSSProperties } = {
   },
   toggleDetailsButtonHover: {
     backgroundColor: '#007bff',
-    color: '#black',
+    color: 'black',
   },
   details: {
+    color: 'black',
     maxHeight: '0',
     overflow: 'hidden',
     opacity: '0',
     transition: 'max-height 0.5s ease, opacity 0.5s ease',
   },
   detailsShow: {
+    color: 'black',
     maxHeight: '500px', // Incrementado para acomodar más contenido
     opacity: '1',
   },
