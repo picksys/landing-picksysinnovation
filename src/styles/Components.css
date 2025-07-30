@@ -2,55 +2,69 @@
 
 /* Variables CSS para consistencia */
 :root {
-  --primary-color: #2563eb;
-  --secondary-color: #1e40af;
-  --accent-color: #3b82f6;
-  --dark-blue: #1e3a8a;
-  --light-blue: #eff6ff;
-  --gray-100: #f3f4f6;
+  /* Colores */
+  --primary-blue: #0066cc;
+  --primary-color: #0066cc;
+  --secondary-blue: #004499;
+  --secondary-color: #004499;
+  --accent-blue: #3388ff;
+  --accent-color: #3388ff;
+  --light-blue: #e6f3ff;
+  --white: #ffffff;
+  --light-gray: #f8f9fa;
+  --medium-gray: #6c757d;
+  --dark-gray: #343a40;
   --gray-200: #e5e7eb;
-  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
   --gray-800: #1f2937;
   --gray-900: #111827;
-  --white: #ffffff;
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --black: #000000;
+  
+  /* Espaciados */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  --spacing-xxl: 4rem;
+  
+  /* Efectos comunes */
+  --blur-light: blur(10px);
+  --blur-heavy: blur(15px);
+  --transition-fast: 0.3s ease;
+  --border-radius: 8px;
+  --shadow-light: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 15px rgba(0, 0, 0, 0.15);
+  --shadow-xl: 0 12px 25px rgba(0, 0, 0, 0.2);
+  --shadow-heavy: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* Video Container Styles */
-.video1 {
-  position: relative;
-  overflow: hidden;
-  min-height: 100vh;
-}
-
-.video1 video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
-}
-
-.video1::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1;
-}
-
 .video2 {
   position: relative;
   overflow: hidden;
   min-height: 100vh;
+}
+
+/* Transición suave entre Hero y Video - Efecto mejorado */
+.video2::before {
+  content: '';
+  position: absolute;
+  top: -150px;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  background: linear-gradient(
+    to bottom, 
+    rgba(0, 0, 0, 0) 0%, 
+    rgba(0, 0, 0, 0.1) 30%,
+    rgba(0, 0, 0, 0.25) 70%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+  filter: blur(1px);
 }
 
 .video2 video {
@@ -75,8 +89,8 @@
 }
 
 /* Estilos para texto sobre videos */
-.video1 .about-us h2,
-.video1 .services h2,
+.video2 .about-us h2,
+.video2 .services h2,
 .video2 .clients h2,
 .video2 .products h2,
 .video2 .contact h2 {
@@ -84,20 +98,20 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
-.video1 .about-us p {
+.video2 .about-us p {
   background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
+  backdrop-filter: var(--blur-light);
 }
 
-/* Mejorar legibilidad de tarjetas de servicios en video1 */
-.video1 .service-item {
+/* Mejorar legibilidad de tarjetas de servicios en video2 */
+.video2 .service-item {
   background: rgba(255, 255, 255, 0.95) !important;
-  backdrop-filter: blur(10px);
+  backdrop-filter: var(--blur-light);
 }
 
-/* Texto blanco para contenido en video2 */
+/* Texto blanco para contenido en video2 - EXCEPTO product-info */
 .video2 .clients p,
-.video2 .products p,
+.video2 .products-content > p,
 .video2 .contact p {
   color: var(--white) !important;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
@@ -105,16 +119,15 @@
 
 /* Texto descriptivo específico */
 /* Asegurar legibilidad de textos principales en video containers */
-.video1 h1, .video1 h2, .video1 h4, .video1 h5, .video1 h6,
-.video1 span, .video1 li,
-.video2 h1, .video2 h2, .video2 h3, .video2 h4, .video2 h5, .video2 h6,
-.video2 > div > p, .video2 .clients-content > p, .video2 .products-content > p {
+.video2 h1, .video2 h2, .video2 h4, .video2 h5, .video2 h6,
+.video2 span, .video2 li,
+.video2 > div > p, .video2 .clients-content > p {
   color: white !important;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8) !important;
 }
 
-/* EXCEPCIÓN: H3 en video1 deben ser azules (subtítulos de especialidades y servicios) */
-.video1 h3 {
+/* EXCEPCIÓN: H3 en video2 deben ser azules (subtítulos de especialidades y servicios) */
+.video2 h3 {
   color: var(--primary-color) !important;
   text-shadow: none !important;
 }
@@ -137,6 +150,12 @@
   border: 1px solid rgba(0, 0, 0, 0.1) !important;
 }
 
+/* EXCEPCIÓN: Features de productos deben ser negras */
+.video2 .product-info .specialty-features li {
+  color: var(--gray-800) !important;
+  text-shadow: none !important;
+}
+
 /* EXCEPCIÓN: Párrafo principal de productos debe ser negro */
 .video2 .products-content > p {
   background: rgba(255, 255, 255, 0.95) !important;
@@ -150,13 +169,13 @@
 }
 
 /* EXCEPCIÓN: Párrafos de About Us deben ser negros sobre fondo semi-transparente */
-.video1 .about-us-content > p {
+.video2 .about-us-content > p {
   background: rgba(255, 255, 255, 0.95) !important;
   color: #1f2937 !important;
   padding: 1.5rem !important;
   border-radius: 0.75rem !important;
   margin: 1.5rem 0 !important;
-  backdrop-filter: blur(10px) !important;
+  backdrop-filter: var(--blur-light) !important;
   text-shadow: none !important;
   border: 1px solid rgba(0, 0, 0, 0.1) !important;
 }
@@ -225,14 +244,8 @@
 }
 
 /* Hacer las secciones transparentes cuando están en contenedores de video */
-.video1 .about-us,
-.video1 .services {
-  background: transparent !important;
-  backdrop-filter: none !important;
-  position: relative;
-  z-index: 2;
-}
-
+.video2 .about-us,
+.video2 .services,
 .video2 .clients,
 .video2 .products,
 .video2 .contact {
@@ -240,21 +253,6 @@
   backdrop-filter: none !important;
   position: relative;
   z-index: 2;
-}
-
-/* Reseteo básico */
-html {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
 }
 
 /* Contenedor principal */
@@ -273,7 +271,7 @@ body {
   line-height: 1.6;
   color: var(--gray-800);
   overflow-x: hidden; /* Evita scroll horizontal */
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
 }
 
@@ -282,7 +280,7 @@ body::before {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   z-index: -1;
@@ -427,6 +425,25 @@ nav a:hover::after {
   position: relative;
   overflow: hidden;
   min-height: 100vh;
+}
+
+/* Degradado suave en la parte inferior del Hero - Efecto mejorado */
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  background: linear-gradient(
+    to bottom, 
+    rgba(0, 0, 0, 0) 0%, 
+    rgba(0, 0, 0, 0.1) 40%,
+    rgba(0, 0, 0, 0.25) 80%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  z-index: 4;
+  pointer-events: none;
 }
 
 /* Fondo de imagen de adan.png */
@@ -768,7 +785,7 @@ button[type="submit"]:hover {
 /* Footer */
 footer {
   text-align: center;
-  padding: 3rem 2rem;
+  padding: var(--spacing-lg) var(--spacing-md);
   background: linear-gradient(135deg, var(--gray-900), var(--gray-800));
   color: var(--white);
   position: relative;
@@ -1283,6 +1300,11 @@ footer a:hover {
 }
 
 @media (max-width: 768px) {
+  /* Alejar videos en móviles para reducir pixelación */
+  .video2 video {
+    transform: scale(1.2);
+  }
+
   header {
     padding: 1rem 1.5rem;
     position: relative;
@@ -1357,7 +1379,7 @@ footer a:hover {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     background: rgba(0, 0, 0, 0.7);
     z-index: 999;
@@ -1464,6 +1486,11 @@ footer a:hover {
 }
 
 @media (max-width: 600px) {
+  /* Alejar más los videos en móviles pequeños */
+  .video2 video {
+    transform: scale(1.3);
+  }
+
   header {
     padding: 0.75rem 1rem;
   }
