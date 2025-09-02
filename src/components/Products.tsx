@@ -19,7 +19,7 @@ function Products() {
       name: "Pedilo Wapido",
       logo: logoPediloWapido,
       description: "Plataforma para administrar pedidos por whatsapp.",
-      features: ["Tienda online", "Administración de pedidos", "Cupones de descuento", "Gestión de productos", "Panel de control", "Cambios agiles de precio a través de excel"],
+      features: ["Tienda online", "Administración de pedidos", "Cupones de descuento", "Gestión de productos", "Panel de control", "Cambios agiles de precio a través de excel", "Chatbot para WhatsApp", "Toma de pedidos automaticos"],
       url: "https://landing.pedilo-wapido.online", // URL de la landing del producto
       backgroundType: "light"
     }
