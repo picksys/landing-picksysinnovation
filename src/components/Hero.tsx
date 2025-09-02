@@ -9,7 +9,7 @@ function Hero() {
         <h1>Bienvenido a Picksys Innovation</h1>
         <p>
           Transformamos ideas en soluciones tecnológicas innovadoras. 
-          Especialistas en SaaS y Chatbots inteligentes para empresas que buscan liderar su industria.
+          Especialistas en Inteligencia Artificial, SaaS y Chatbots inteligentes para empresas que buscan liderar su industria.
         </p>
         <div className="hero-actions">
           <a href="#contact" className="cta-button">
