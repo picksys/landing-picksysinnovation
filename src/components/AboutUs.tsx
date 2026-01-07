@@ -21,45 +21,25 @@ function AboutUs() {
           innovación en SaaS y automatización inteligente, nuestro compromiso con la excelencia y nuestra 
           capacidad para adaptarnos a las necesidades cambiantes del mercado digital.
         </p>
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
-          gap: '2rem', 
-          marginTop: '3rem' 
-        }}>
-          <div style={{ 
-            textAlign: 'center', 
-            padding: '1.5rem', 
-            background: 'rgba(255, 255, 255, 0.7)', 
-            borderRadius: '1rem',
-            border: '1px solid rgba(59, 130, 246, 0.1)'
-          }}>
-            <h3 style={{ color: 'var(--primary-color)', marginBottom: '1rem' }}>🚀 Innovación</h3>
-            <p style={{ fontSize: '0.95rem', margin: 0 }}>
+        <div className="about-values-grid">
+          <div className="about-value-card">
+            <div className="about-value-icon">🚀</div>
+            <h3>Innovación</h3>
+            <p>
               Adoptamos las últimas tecnologías para crear soluciones que marquen la diferencia
             </p>
           </div>
-          <div style={{ 
-            textAlign: 'center', 
-            padding: '1.5rem', 
-            background: 'rgba(255, 255, 255, 0.7)', 
-            borderRadius: '1rem',
-            border: '1px solid rgba(59, 130, 246, 0.1)'
-          }}>
-            <h3 style={{ color: 'var(--primary-color)', marginBottom: '1rem' }}>⚡ Escalabilidad</h3>
-            <p style={{ fontSize: '0.95rem', margin: 0 }}>
+          <div className="about-value-card">
+            <div className="about-value-icon">⚡</div>
+            <h3>Escalabilidad</h3>
+            <p>
               Desarrollamos software que crece junto con tu negocio
             </p>
           </div>
-          <div style={{ 
-            textAlign: 'center', 
-            padding: '1.5rem', 
-            background: 'rgba(255, 255, 255, 0.7)', 
-            borderRadius: '1rem',
-            border: '1px solid rgba(59, 130, 246, 0.1)'
-          }}>
-            <h3 style={{ color: 'var(--primary-color)', marginBottom: '1rem' }}>🤝 Compromiso</h3>
-            <p style={{ fontSize: '0.95rem', margin: 0 }}>
+          <div className="about-value-card">
+            <div className="about-value-icon">🤝</div>
+            <h3>Compromiso</h3>
+            <p>
               Tu éxito es nuestro éxito. Trabajamos como tu socio tecnológico
             </p>
           </div>

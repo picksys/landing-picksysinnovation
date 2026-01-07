@@ -80,14 +80,7 @@ function Clients() {
     <section id="clients" className="clients">
       <div className="clients-content">
         <h2>Nuestros Clientes</h2>
-        <p style={{ 
-          fontSize: '1.125rem', 
-          color: 'var(--gray-800)', 
-          marginBottom: '3rem', 
-          maxWidth: '700px', 
-          marginLeft: 'auto', 
-          marginRight: 'auto' 
-        }}>
+        <p className="clients-subtitle">
           Confiamos en construir relaciones duraderas con nuestros clientes, 
           brindando soluciones que impulsan su crecimiento y éxito empresarial.
         </p>

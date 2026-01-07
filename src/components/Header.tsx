@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import logo1 from '../assets/logo1.png';
 import logo2 from '../assets/logo2.png';
+import NetworkAnimation from './NetworkAnimation';
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,6 +16,7 @@ function Header() {
 
   return (
     <header className={isMenuOpen ? 'header-menu-open' : ''}>
+      <NetworkAnimation />
       <div className="logo">
         <img 
           src={isMenuOpen ? logo2 : logo1} 

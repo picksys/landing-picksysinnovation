@@ -29,14 +29,7 @@ function Products() {
     <section id="products" className="products">
       <div className="products-content">
         <h2>Nuestros Productos</h2>
-        <p style={{ 
-          fontSize: '1.125rem', 
-          color: 'var(--gray-800)', 
-          marginBottom: '3rem', 
-          maxWidth: '800px', 
-          marginLeft: 'auto', 
-          marginRight: 'auto' 
-        }}>
+        <p className="products-subtitle">
           Desarrollamos soluciones tecnológicas propias que resuelven necesidades específicas del mercado. 
           Conoce nuestros productos estrella que ya están transformando industrias.
         </p>
@@ -60,14 +53,18 @@ function Products() {
                   <h3>{product.name}</h3>
                   <p>{product.description}</p>
                   {product.features && (
-                    <ul className="specialty-features" style={{ marginTop: '1rem' }}>
+                    <ul className="product-features">
                       {product.features.map((feature, index) => (
                         <li key={index}>{feature}</li>
                       ))}
                     </ul>
                   )}
                   <div className="visit-product-badge">
-                    Visitar sitio web →
+                    <span>Visitar sitio web</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
                   </div>
                 </div>
               </a>

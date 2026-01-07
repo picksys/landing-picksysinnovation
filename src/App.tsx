@@ -8,23 +8,21 @@ import Footer from './components/Footer';
 import AboutUs from './components/AboutUs';
 import Clients from './components/Clients';
 import Products from './components/Products';
-import nodosVideo from './assets/nodos.mp4';
+import Specialties from './components/Specialties';
+import GlobalVideoBackground from './components/GlobalVideoBackground';
 
 function App() {
   return (
     <>
+      <GlobalVideoBackground />
       <Header />
       <Hero />
-      <div className="video2">
-        <video autoPlay muted loop playsInline>
-          <source src={nodosVideo} type="video/mp4" />
-        </video>
-        <AboutUs />
-        <Services />
-        <Clients />
-        <Products />
-        <Contact />
-      </div>
+      <AboutUs />
+      <Specialties />
+      <Services />
+      <Products />
+      <Clients />
+      <Contact />
       <Footer />
     </>
   );

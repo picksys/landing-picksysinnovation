@@ -1,5 +1,4 @@
 import '../styles/Components.css';
-import adanImage from '../assets/adan.png';
 
 function Specialties() {
   const specialties = [
@@ -38,41 +37,11 @@ function Specialties() {
   ];
 
   return (
-    <section 
-      id="specialties" 
-      className="specialties"
-    >
-      {/* Imagen de fondo */}
-      <div 
-        className="specialties-background"
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          backgroundImage: `url(${adanImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          zIndex: 0,
-          opacity: 0.3
-        }}
-      ></div>
-      
-      {/* Overlay semitransparente */}
-      <div 
-        className="specialties-overlay"
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          background: 'linear-gradient(135deg, rgba(239, 246, 255, 0.8) 0%, rgba(255, 255, 255, 0.8) 100%)',
-          zIndex: 1
-        }}
-      ></div>
+    <section id="specialties" className="specialties">
+      <div className="section-decoration">
+        <div className="decoration-circle decoration-1"></div>
+        <div className="decoration-circle decoration-2"></div>
+      </div>
       <div className="specialties-content">
         <h2>Nuestras Especialidades</h2>
         <p className="specialties-subtitle">
