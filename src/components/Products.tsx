@@ -1,6 +1,7 @@
 import '../styles/Components.css';
 import logoClubAgenda from '../assets/prouductos/logo-club-agenda.jpeg';
 import logoPediloWapido from '../assets/prouductos/logo-pedilo-wapido.png';
+import logoInvitacionesQr from '../assets/prouductos/logo-invitaciones-qr.svg';
 
 function Products() {
   // Array de productos propios
@@ -11,7 +12,7 @@ function Products() {
       logo: logoClubAgenda,
       description: "Plataforma integral para la gestión de clubes deportivos y actividades recreativas.",
       features: ["Gestión de reservas", "Control de socios", "Calendario de eventos", "Análisis de uso", "Cupones de descuento"],
-      url: "https://clubagenda.com", // URL de la landing del producto
+      url: "", // URL de la landing del producto
       backgroundType: "light"
     },
     {
@@ -21,6 +22,15 @@ function Products() {
       description: "Plataforma para administrar pedidos por whatsapp.",
       features: ["Tienda online", "Administración de pedidos", "Cupones de descuento", "Gestión de productos", "Panel de control", "Cambios agiles de precio a través de excel", "Chatbot para WhatsApp", "Toma de pedidos automaticos"],
       url: "https://landing.pedilo-wapido.online", // URL de la landing del producto
+      backgroundType: "light"
+    },
+    {
+      id: 3,
+      name: "InvitacionesQR",
+      logo: logoInvitacionesQr,
+      description: "Plataforma para crear eventos y generar entradas con QR, sin venta de tickets. Ideal para controlar accesos y validar asistentes.",
+      features: ["Creación de eventos", "Generación de tickets con QR", "Control de acceso en tiempo real", "Gestión de equipos", "Analytics en tiempo real"],
+      url: "https://landingiqr.picksysinnovation.com/",
       backgroundType: "light"
     }
   ];
@@ -34,19 +44,14 @@ function Products() {
           Conoce nuestros productos estrella que ya están transformando industrias.
         </p>
         <div className="products-grid">
-          {products.map(product => (
-            <div key={product.id} className="product-card">
-              <a 
-                href={product.url} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="product-link"
-              >
+          {products.map(product => {
+            const content = (
+              <>
                 <div className={`product-logo ${product.backgroundType === 'dark' ? 'product-logo-dark' : 'product-logo-light'}`}>
                   <img 
                     src={product.logo} 
                     alt={`Logo de ${product.name}`}
-                    title={`Visitar ${product.name}`}
+                    title={product.url ? `Visitar ${product.name}` : product.name}
                   />
                 </div>
                 <div className="product-info">
@@ -59,17 +64,38 @@ function Products() {
                       ))}
                     </ul>
                   )}
-                  <div className="visit-product-badge">
-                    <span>Visitar sitio web</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                      <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
-                  </div>
+                  {product.url && (
+                    <div className="visit-product-badge">
+                      <span>Visitar sitio web</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                      </svg>
+                    </div>
+                  )}
                 </div>
-              </a>
-            </div>
-          ))}
+              </>
+            );
+
+            return (
+              <div key={product.id} className="product-card">
+                {product.url ? (
+                  <a 
+                    href={product.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="product-link"
+                  >
+                    {content}
+                  </a>
+                ) : (
+                  <div className="product-link">
+                    {content}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
