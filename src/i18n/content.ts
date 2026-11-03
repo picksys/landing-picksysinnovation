@@ -32,6 +32,7 @@ const en = {
     badges: ['Nearshore team', 'US time-zone friendly', 'English & Spanish'],
     scroll: 'Scroll',
     funnel: ['Visitors', 'Leads', 'Customers'],
+    tap: 'Tap the funnel',
   },
   marquee: [
     'AI Chatbots',
@@ -221,6 +222,7 @@ const es: Content = {
     badges: ['Equipo nearshore', 'Mismo huso horario que EE. UU.', 'Inglés y español'],
     scroll: 'Scroll',
     funnel: ['Visitantes', 'Leads', 'Clientes'],
+    tap: 'Toca el embudo',
   },
   marquee: [
     'Chatbots con IA',

@@ -16,15 +16,13 @@ export default function Hero() {
         <span className="a3" />
       </div>
       <div className="hero-grid" aria-hidden="true" />
-      <FunnelCanvas labels={h.funnel} />
-
-      {/* key forces the intro animation to replay on language change */}
-      <div className="container hero-inner" key={lang}>
-        <p className="eyebrow hero-in" style={{ ['--d' as string]: '0ms' }}>
+      <div className="container hero-inner">
+        {/* key={lang} replays the intro animation on language change (canvas is not remounted) */}
+        <p key={`e-${lang}`} className="eyebrow hero-in" style={{ ['--d' as string]: '0ms' }}>
           <span className="pulse-dot" />
           {h.eyebrow}
         </p>
-        <h1 className="hero-title">
+        <h1 key={`t-${lang}`} className="hero-title">
           <span className="line">
             <span className="hero-in" style={{ ['--d' as string]: '80ms' }}>{h.titleA}</span>
           </span>
@@ -34,10 +32,18 @@ export default function Hero() {
             </span>
           </span>
         </h1>
-        <p className="hero-sub hero-in" style={{ ['--d' as string]: '320ms' }}>
+        {/* Desktop: full-bleed background. Mobile: its own stage between title and CTAs. */}
+        <div className="funnel-stage">
+          <FunnelCanvas labels={h.funnel} />
+          <span className="tap-hint" aria-hidden="true">
+            <i />
+            {h.tap}
+          </span>
+        </div>
+        <p key={`s-${lang}`} className="hero-sub hero-in" style={{ ['--d' as string]: '320ms' }}>
           {h.sub}
         </p>
-        <div className="hero-ctas hero-in" style={{ ['--d' as string]: '420ms' }}>
+        <div key={`c-${lang}`} className="hero-ctas hero-in" style={{ ['--d' as string]: '420ms' }}>
           <a href={book} className="btn btn-grad btn-lg" {...(site.bookingUrl ? { target: '_blank', rel: 'noopener' } : {})}>
             {h.primary}
             <Arrow />
@@ -46,7 +52,7 @@ export default function Hero() {
             {h.secondary}
           </a>
         </div>
-        <ul className="hero-badges hero-in" style={{ ['--d' as string]: '520ms' }}>
+        <ul key={`b-${lang}`} className="hero-badges hero-in" style={{ ['--d' as string]: '520ms' }}>
           {h.badges.map((b) => (
             <li key={b}>
               <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">

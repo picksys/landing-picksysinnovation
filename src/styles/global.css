@@ -642,7 +642,24 @@ p {
   height: 100%;
 }
 .hero-inner {
-  position: relative;
+  position: static; /* lets the desktop funnel stage fill the whole hero */
+}
+.hero-inner > .funnel-stage {
+  max-width: none;
+}
+.funnel-stage {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  animation: stageIn 1.6s ease-out 0.2s both;
+}
+@keyframes stageIn {
+  from {
+    opacity: 0;
+  }
+}
+.tap-hint {
+  display: none;
 }
 .hero-inner > * {
   max-width: 720px;
@@ -1696,8 +1713,40 @@ a.product:hover {
     align-items: flex-start;
     padding-top: calc(var(--nav-h) + 32px);
   }
-  .funnel-canvas {
-    opacity: 0.45;
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+  }
+  .hero-inner > .eyebrow {
+    align-self: flex-start;
+  }
+  .funnel-stage {
+    position: relative;
+    inset: auto;
+    z-index: 0;
+    order: 2;
+    width: auto;
+    height: clamp(260px, min(88vw, 42svh), 460px);
+    margin: 4px calc(-1 * var(--gutter)) 0;
+    touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .hero-ctas {
+    order: 3;
+    margin-top: 8px;
+  }
+  .hero-sub {
+    order: 4;
+    margin-top: 28px;
+  }
+  .hero-badges {
+    order: 5;
+  }
+  .scroll-cue {
+    display: none;
+  }
+  .hero {
+    padding-bottom: 64px;
   }
   .founders-grid,
   .contact-grid {
@@ -1729,6 +1778,51 @@ a.product:hover {
     grid-column: 2;
     justify-self: start;
     text-align: left;
+  }
+}
+
+@media (hover: none) and (max-width: 900px) {
+  .tap-hint {
+    position: absolute;
+    right: var(--gutter);
+    bottom: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dim);
+    pointer-events: none;
+    animation: hintFade 6s ease 1.5s both;
+  }
+  .tap-hint i {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--cyan);
+  }
+  .tap-hint i::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--cyan);
+    animation: ping 1.6s var(--ease) infinite;
+  }
+}
+@keyframes hintFade {
+  0% {
+    opacity: 0;
+  }
+  10%,
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.35;
   }
 }
 
