@@ -1,45 +1,66 @@
-import '../styles/Components.css';
-import logo2 from '../assets/logo2.png';
+import { useLang } from '../i18n/LanguageContext';
+import { site } from '../i18n/content';
+import FunnelCanvas from './FunnelCanvas';
+import { Arrow } from './icons';
 
-function Hero() {
+export default function Hero() {
+  const { t, lang } = useLang();
+  const h = t.hero;
+  const book = site.bookingUrl || '#contact';
+
   return (
-    <section id="hero" className="hero">
-      {/* Elementos decorativos de fondo */}
-      <div className="hero-bg-gradient"></div>
-      <div className="hero-bg-pattern"></div>
-      <div className="hero-floating-shapes">
-        <div className="floating-shape shape-1"></div>
-        <div className="floating-shape shape-2"></div>
-        <div className="floating-shape shape-3"></div>
-        <div className="floating-shape shape-4"></div>
-        <div className="floating-shape shape-5"></div>
+    <section id="top" className="hero">
+      <div className="aurora" aria-hidden="true">
+        <span className="a1" />
+        <span className="a2" />
+        <span className="a3" />
       </div>
-      
-      <div className="hero-content">
-        <span className="hero-badge">🚀 Innovación Tecnológica</span>
-        <h1>Transformamos Ideas en Soluciones Digitales</h1>
-        <p>
-          Especialistas en desarrollo de <strong>SaaS</strong>, <strong>Chatbots con IA</strong> y 
-          soluciones tecnológicas personalizadas para empresas que buscan liderar su industria.
+      <div className="hero-grid" aria-hidden="true" />
+      <FunnelCanvas labels={h.funnel} />
+
+      {/* key forces the intro animation to replay on language change */}
+      <div className="container hero-inner" key={lang}>
+        <p className="eyebrow hero-in" style={{ ['--d' as string]: '0ms' }}>
+          <span className="pulse-dot" />
+          {h.eyebrow}
         </p>
-        <div className="hero-actions">
-          <a href="#contact" className="cta-button">
-            <span>Comenzar Proyecto</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
+        <h1 className="hero-title">
+          <span className="line">
+            <span className="hero-in" style={{ ['--d' as string]: '80ms' }}>{h.titleA}</span>
+          </span>
+          <span className="line">
+            <span className="hero-in" style={{ ['--d' as string]: '180ms' }}>
+              {h.titleB} <em className="accent-word">{h.titleAccent}</em> {h.titleC}
+            </span>
+          </span>
+        </h1>
+        <p className="hero-sub hero-in" style={{ ['--d' as string]: '320ms' }}>
+          {h.sub}
+        </p>
+        <div className="hero-ctas hero-in" style={{ ['--d' as string]: '420ms' }}>
+          <a href={book} className="btn btn-grad btn-lg" {...(site.bookingUrl ? { target: '_blank', rel: 'noopener' } : {})}>
+            {h.primary}
+            <Arrow />
           </a>
-          <a href="#about-us" className="cta-button-secondary">
-            Conocer Más
+          <a href="#work" className="btn btn-ghost btn-lg">
+            {h.secondary}
           </a>
         </div>
-        <div className="hero-logo">
-          <img src={logo2} alt="Picksys Innovation Logo" />
-        </div>
+        <ul className="hero-badges hero-in" style={{ ['--d' as string]: '520ms' }}>
+          {h.badges.map((b) => (
+            <li key={b}>
+              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                <path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              {b}
+            </li>
+          ))}
+        </ul>
       </div>
+
+      <a href="#services" className="scroll-cue" aria-label={h.scroll}>
+        <span />
+      </a>
     </section>
   );
 }
-
-export default Hero;
