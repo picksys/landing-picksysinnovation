@@ -1,7 +1,7 @@
 import { useLang } from '../i18n/LanguageContext';
 import { spotlight, useCountUp, useScrollProgress } from '../hooks/motion';
 import Marquee from './Marquee';
-import { ServiceIcon } from './icons';
+import { Arrow, ServiceIcon } from './icons';
 
 export function SectionHead({ label, title, accent, sub, center = false }: { label: string; title: string; accent?: string; sub?: string; center?: boolean }) {
   return (
@@ -77,8 +77,11 @@ export function Services() {
                 <ServiceIcon kind={it.key} />
                 <span className="service-num">0{i + 1}</span>
               </div>
-              <h3 className="h3">{it.title}</h3>
-              <p className="muted">{it.text}</p>
+              <p className="service-tag is-problem">{s.problemLabel}</p>
+              <h3 className="h3">{it.problem}</h3>
+              <p className="muted">{it.pain}</p>
+              <p className="service-tag is-fix">{s.fixLabel}</p>
+              <p className="service-fix">{it.solution}</p>
               <ul className="service-points">
                 {it.points.map((p) => (
                   <li key={p}>{p}</li>
@@ -86,6 +89,19 @@ export function Services() {
               </ul>
             </article>
           ))}
+        </div>
+        <div className="services-foot" data-reveal>
+          <p className="services-proof">{s.proof}</p>
+          <a href="#contact" className="btn btn-grad btn-lg">
+            {s.cta}
+            <Arrow />
+          </a>
+          <p className="services-note">{s.ctaNote}</p>
+          <p className="services-other">
+            <a href="#contact" className="link-grad">
+              {s.other}
+            </a>
+          </p>
         </div>
       </div>
     </section>

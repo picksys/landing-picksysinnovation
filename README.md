@@ -33,13 +33,13 @@ Inglés por defecto. El selector EN/ES guarda la preferencia (localStorage) y `?
 1. Hero — propuesta de valor + embudo de partículas (Canvas 2D) “Visitors → Leads → Customers”
 2. Ticker infinito de servicios
 3. Manifiesto — palabras que se iluminan con el scroll
-4. Servicios — Software & IA · Marketing digital · Embudos de venta
+4. Servicios — enfocado en restaurantes: 3 tarjetas problema → solución + CTA "Restaurant Digital Operations Review"
 5. Fundadores — Eduardo (ingeniería/IA) + Luciano (ventas)
 6. Proceso — 4 pasos con barra de progreso ligada al scroll
 7. Trabajos — productos propios + trabajos para clientes
 8. Números
 9. Clientes — doble carrusel infinito de logos
-10. Contacto — formulario (Formspree) + email
+10. Contacto — cuestionario de 3 pasos para restaurantes (Formspree, claves siempre en inglés) + email. Preguntas en `contact.questions` de `content.ts`
 
 ## Performance
 - Animaciones con CSS transform/opacity (GPU); un único IntersectionObserver para los “reveal”.

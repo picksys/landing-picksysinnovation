@@ -1885,3 +1885,182 @@ a.product:hover {
     transform: none;
   }
 }
+
+/* ==========================================================================
+   RESTAURANT SERVICES (problem → fix) + CONTACT SURVEY
+   ========================================================================== */
+.service-card {
+  gap: 12px;
+}
+.service-card .service-top {
+  margin-bottom: 14px;
+}
+.service-tag {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.service-tag.is-problem {
+  color: #ff8a8a;
+}
+.service-tag.is-fix {
+  margin-top: 10px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  color: var(--cyan);
+}
+.service-fix {
+  margin: 0;
+  color: #d0d4de;
+}
+.service-card .service-points {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 0;
+}
+.services-foot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-top: clamp(36px, 5vw, 56px);
+  text-align: center;
+}
+.services-proof {
+  max-width: 640px;
+  margin: 0 0 6px;
+  color: var(--muted);
+}
+.services-foot .btn {
+  max-width: 100%;
+  white-space: normal;
+  text-align: center;
+}
+.services-note,
+.services-other {
+  max-width: 560px;
+  margin: 0;
+  font-size: 14px;
+  color: var(--dim);
+}
+
+.contact-perks {
+  margin: 28px 0 24px;
+  padding: 22px 0 0;
+  list-style: none;
+}
+.survey-head {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.survey-step {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+.survey-step strong {
+  color: var(--text);
+  font-weight: 600;
+}
+.survey-bar {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+.survey-bar span {
+  display: block;
+  height: 100%;
+  background: var(--grad);
+  transform-origin: left;
+  transition: transform 0.45s var(--ease);
+}
+.survey-step-body {
+  display: grid;
+  gap: 18px;
+}
+.survey-step-body[hidden] {
+  display: none;
+}
+.survey-q legend {
+  display: grid;
+  gap: 2px;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 500;
+}
+.survey-q legend small {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--dim);
+}
+.survey-q.field textarea {
+  padding-top: 34px;
+}
+.survey-q.field span {
+  right: 16px;
+}
+.choice {
+  position: relative;
+  display: inline-flex;
+  cursor: pointer;
+}
+.choice input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.choice span {
+  padding: 9px 15px;
+  border-radius: 999px;
+  font-size: 14px;
+  background: var(--surface-2);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+  transition:
+    background-color 0.25s,
+    color 0.25s,
+    box-shadow 0.25s;
+}
+.choice:hover span {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+.choice input:focus-visible + span {
+  box-shadow:
+    inset 0 0 0 1px var(--violet),
+    0 0 0 4px rgba(139, 92, 255, 0.25);
+}
+.choice.is-on span {
+  color: #07080c;
+  background: #fff;
+}
+.survey-q.is-missing legend {
+  color: #ff8a8a;
+}
+.survey-error {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: #ff8a8a;
+}
+.survey-nav {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+.survey-next {
+  flex: 1;
+}
+.survey-done {
+  margin: 0;
+  padding: 48px 8px;
+  font-size: 17px;
+}
+@media (max-width: 600px) {
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+}
