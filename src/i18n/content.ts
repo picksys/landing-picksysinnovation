@@ -4,8 +4,20 @@
  */
 export type Lang = 'en' | 'es';
 
-export type QuestionKind = 'one' | 'many' | 'text';
-export type Question = { id: string; step: number; kind: QuestionKind; q: string; options: string[]; required?: boolean };
+export type QuestionKind = 'one' | 'many' | 'scale' | 'text' | 'textarea' | 'email' | 'phone' | 'note';
+export type Question = {
+  id: string;
+  step: number;
+  kind: QuestionKind;
+  q: string;
+  options?: string[];
+  required?: boolean;
+  placeholder?: string;
+  /** 'note' blocks: secondary paragraph under the heading. */
+  text?: string;
+  /** Only shown when question `id` has one of these option indexes selected. */
+  showIf?: { id: string; values: number[] };
+};
 
 const en = {
   meta: {
@@ -179,42 +191,47 @@ const en = {
     titleAccent: 'that move.',
   },
   contact: {
-    label: 'Restaurant review',
-    title: 'Book your free',
-    titleAccent: 'Digital Operations Review.',
-    sub: 'Answer a few questions (about 3 minutes). We come to the call with ideas for your restaurant, not a generic pitch, and reply within 24 hours.',
-    perks: ['Where bookings and messages are slipping away', 'What can be automated first', 'A clear plan with a fixed price, if it makes sense'],
-    stepLabel: 'Step',
+    label: 'Survey',
+    title: 'Tell us how you',
+    titleAccent: 'handle your leads.',
+    sub: 'A short survey (about 3 minutes) for business owners. Your answers help us build something that solves real problems.',
+    perks: ['No sales pitch', 'No charges, no trial traps', 'Contact details are optional'],
+    surveyTitle: 'Small Contractor Business – Operations & Workflow Survey',
+    intro: [
+      "We are 2 Argentinian freelancers looking for new challenges abroad. We're exploring a service designed to help independent contractors and small businesses manage incoming inquiries and follow-ups more efficiently.",
+      'The idea is to poll a few business owners to understand how they currently handle new leads and whether missed follow-ups are a real problem.',
+    ],
+    stepLabel: 'Page',
     of: 'of',
-    steps: ['Your restaurant', 'Bookings & messages', 'Tools & priorities'],
+    steps: ['Your business', 'Leads & sales'],
     next: 'Next',
     back: 'Back',
-    send: 'Book my review',
+    send: 'Submit',
     sending: 'Sending…',
     pickMany: 'Select all that apply',
-    pickOne: 'Select one',
-    required: 'Please choose at least one option.',
-    ok: 'Thank you! We will review your answers and get back to you within 24 hours.',
+    required: 'This question is required.',
+    ok: "Thanks for sharing! We'll keep you in mind in the future. We're still building up our purpose here!",
+    signature: 'Luciano & Eduardo',
     error: 'Something went wrong. Please try again or email us directly.',
     direct: 'Prefer email?',
-    fields: {
-      name: 'Your name',
-      restaurant: 'Restaurant name',
-      email: 'Email',
-      phone: 'Phone / WhatsApp (optional)',
-      city: 'City, State (optional)',
-    },
+    scaleLow: 'Weak',
+    scaleHigh: 'Excellent',
     questions: <Question[]>[
-      { id: 'type', step: 0, kind: 'one', q: 'What kind of business is it?', options: ['Full-service restaurant', 'Fast casual', 'Café or bakery', 'Bar or lounge', 'Food truck', 'Other business'] },
-      { id: 'locations', step: 0, kind: 'one', q: 'How many locations?', options: ['1', '2–5', '6 or more'] },
-      { id: 'reservations', step: 1, kind: 'many', required: true, q: 'How do you currently manage reservations and booking requests?', options: ['Phone calls', 'OpenTable, Resy or similar', 'Reserve with Google', 'Instagram or Facebook messages', 'WhatsApp or text messages', 'Website form', 'Walk-ins only'] },
-      { id: 'channels', step: 1, kind: 'many', q: 'Which channels generate the most customer inquiries?', options: ['Phone', 'Instagram', 'Facebook', 'Google Maps & reviews', 'WhatsApp or text', 'Website or email', 'Delivery apps'] },
-      { id: 'social', step: 1, kind: 'one', q: 'How do you handle Instagram and Facebook messages?', options: ['The owner answers when possible', 'Staff answer between tasks', 'A dedicated person or agency', 'Automated replies', 'We rarely get to them'] },
-      { id: 'time', step: 1, kind: 'one', q: 'How much time does your team spend answering repetitive questions?', options: ['Less than 1 hour a week', '1–5 hours a week', '5–10 hours a week', 'More than 10 hours a week', 'No idea'] },
-      { id: 'afterHours', step: 2, kind: 'one', q: 'What happens when a booking request arrives outside business hours?', options: ['It goes to voicemail', 'We reply the next day', 'Online booking or an auto-reply handles it', 'It usually gets lost'] },
-      { id: 'software', step: 2, kind: 'many', q: 'Which software platforms are you currently using?', options: ['OpenTable', 'Resy', 'Tock', 'SevenRooms', 'Yelp Guest Manager', 'Toast', 'Square', 'Clover', 'None', 'Other'] },
-      { id: 'frustration', step: 2, kind: 'text', q: 'What is the most frustrating part of managing guest communications?', options: [] },
-      { id: 'invested', step: 2, kind: 'one', q: 'Have you previously invested in automation or digital solutions?', options: ['Yes, and it worked', 'Yes, but it did not deliver', 'No, but we are open to it', 'No, not sure it is for us'] },
+      { id: 'trade', step: 0, kind: 'one', required: true, q: 'What type of trade is your business in?', options: ['HVAC', 'Plumbing', 'Electrical', 'Roofing', 'Landscaping', 'Painting', 'Remodeling', 'General Contracting', 'Other'] },
+      { id: 'niche', step: 0, kind: 'text', required: true, q: 'Type your business sector/niche', showIf: { id: 'trade', values: [8] } },
+      { id: 'team', step: 0, kind: 'one', required: true, q: 'How many people directly work at your company (including yourself)?', options: ['1 (Solo operator)', '2–5 employees', '5–20 employees', 'More than 20'] },
+      { id: 'years', step: 0, kind: 'one', required: true, q: 'How many years have you been in business?', options: ['Less than 1 year', '1–3 years', '4–10 years', 'Over 10 years'] },
+      { id: 'salesScore', step: 0, kind: 'scale', required: true, q: 'How strong do you think your sales process is overall, 10 being the best?' },
+      { id: 'leadTracking', step: 1, kind: 'one', required: true, q: 'How do you currently track your incoming leads?', options: ['I have someone doing that for the company', 'Spreadsheets (Excel/Google Sheets)', 'Email/Text messages', 'Specialized Business Software (CRM)', "I don't track them formally"] },
+      { id: 'trackingBrief', step: 1, kind: 'textarea', q: "Give us a brief: information you track and how it's used", placeholder: 'We have WhatsApp chats and we use tags to separate different sales stages. We also have invoice information within our internal system', showIf: { id: 'leadTracking', values: [0, 1, 3] } },
+      { id: 'quotes', step: 1, kind: 'one', required: true, q: 'How do you typically send your estimates or quotes to customers?', options: ['In person, handwritten/paper quote or through a call', 'I have an application/website doing that for the company', 'Email or text message (PDF or other file)', 'In our office through an internal system'] },
+      { id: 'challenge', step: 1, kind: 'one', required: true, q: 'What is the biggest challenge in your daily operations when it comes to sales?', options: ['Scheduling and dispatching', 'Collecting payments on time', 'Customer communication', 'Finding new leads/jobs', 'Estimating and quoting jobs right after client contact', 'Keeping track of paperwork/invoices'] },
+      { id: 'channels', step: 1, kind: 'many', required: true, q: 'Which channels generate the most customer inquiries?', options: ['Internet ads (Meta, Google, AI)', 'Street advertising', 'Specific partner (government or go-to portal)', 'Organic (word of mouth)'] },
+      { id: 'frustration', step: 1, kind: 'text', required: true, q: 'What is the most frustrating part of managing guest communications?', placeholder: 'Rescheduling & urgencies' },
+      { id: 'contactNote', step: 1, kind: 'note', q: 'If you want to help us further to build a solid bridge that merges leads with happy customers, give us your contact. We can chat either through email or messenger apps.', text: "We're looking for feedback. We won't charge anything or trick you into trials." },
+      { id: 'email', step: 1, kind: 'email', q: 'If you prefer email' },
+      { id: 'whatsapp', step: 1, kind: 'phone', q: 'If you choose WhatsApp' },
+      { id: 'telegram', step: 1, kind: 'phone', q: 'If you choose Telegram' },
     ],
   },
   footer: {
@@ -399,42 +416,47 @@ const es: Content = {
     titleAccent: 'confían en nosotros.',
   },
   contact: {
-    label: 'Revisión para restaurantes',
-    title: 'Agenda tu revisión',
-    titleAccent: 'digital gratuita.',
-    sub: 'Responde unas preguntas (unos 3 minutos). Llegamos a la llamada con ideas para tu restaurante, no con un discurso genérico, y te respondemos en menos de 24 horas.',
-    perks: ['Dónde se pierden reservas y mensajes', 'Qué conviene automatizar primero', 'Un plan claro con precio cerrado, si tiene sentido'],
-    stepLabel: 'Paso',
+    label: 'Encuesta',
+    title: 'Cuéntanos cómo manejas',
+    titleAccent: 'tus contactos.',
+    sub: 'Una encuesta corta (unos 3 minutos) para dueños de negocios. Tus respuestas nos ayudan a construir algo que resuelva problemas reales.',
+    perks: ['Sin discurso de venta', 'Sin cobros ni pruebas engañosas', 'Los datos de contacto son opcionales'],
+    surveyTitle: 'Encuesta para pequeñas empresas de oficios: operaciones y flujo de trabajo',
+    intro: [
+      'Somos 2 freelancers argentinos buscando nuevos desafíos en el exterior. Estamos explorando un servicio pensado para ayudar a contratistas independientes y pequeñas empresas a gestionar consultas entrantes y seguimientos de forma más eficiente.',
+      'La idea es consultar a algunos dueños de negocios para entender cómo manejan hoy los nuevos contactos y si los seguimientos perdidos son un problema real.',
+    ],
+    stepLabel: 'Página',
     of: 'de',
-    steps: ['Tu restaurante', 'Reservas y mensajes', 'Herramientas y prioridades'],
+    steps: ['Tu negocio', 'Contactos y ventas'],
     next: 'Siguiente',
     back: 'Atrás',
-    send: 'Agendar mi revisión',
+    send: 'Enviar',
     sending: 'Enviando…',
     pickMany: 'Elige todas las que apliquen',
-    pickOne: 'Elige una',
-    required: 'Elige al menos una opción.',
-    ok: '¡Gracias! Revisamos tus respuestas y te contactamos en menos de 24 horas.',
+    required: 'Esta pregunta es obligatoria.',
+    ok: '¡Gracias por compartir! Te tendremos en cuenta en el futuro. ¡Todavía estamos construyendo nuestro propósito!',
+    signature: 'Luciano y Eduardo',
     error: 'Algo salió mal. Inténtalo de nuevo o escríbenos directamente.',
     direct: '¿Prefieres email?',
-    fields: {
-      name: 'Tu nombre',
-      restaurant: 'Nombre del restaurante',
-      email: 'Email',
-      phone: 'Teléfono / WhatsApp (opcional)',
-      city: 'Ciudad, Estado (opcional)',
-    },
+    scaleLow: 'Débil',
+    scaleHigh: 'Excelente',
     questions: [
-      { id: 'type', step: 0, kind: 'one', q: '¿Qué tipo de negocio es?', options: ['Restaurante con servicio de mesa', 'Fast casual', 'Café o panadería', 'Bar o lounge', 'Food truck', 'Otro tipo de negocio'] },
-      { id: 'locations', step: 0, kind: 'one', q: '¿Cuántos locales tiene?', options: ['1', '2–5', '6 o más'] },
-      { id: 'reservations', step: 1, kind: 'many', required: true, q: '¿Cómo gestionas hoy las reservas y solicitudes?', options: ['Llamadas telefónicas', 'OpenTable, Resy o similar', 'Reservas con Google', 'Mensajes de Instagram o Facebook', 'WhatsApp o SMS', 'Formulario web', 'Solo sin reserva'] },
-      { id: 'channels', step: 1, kind: 'many', q: '¿Qué canales generan más consultas de clientes?', options: ['Teléfono', 'Instagram', 'Facebook', 'Google Maps y reseñas', 'WhatsApp o SMS', 'Web o email', 'Apps de delivery'] },
-      { id: 'social', step: 1, kind: 'one', q: '¿Cómo manejan los mensajes de Instagram y Facebook?', options: ['Responde el dueño cuando puede', 'El personal responde entre tareas', 'Una persona o agencia dedicada', 'Respuestas automáticas', 'Casi nunca llegamos a responder'] },
-      { id: 'time', step: 1, kind: 'one', q: '¿Cuánto tiempo dedica tu equipo a responder preguntas repetidas?', options: ['Menos de 1 hora por semana', '1–5 horas por semana', '5–10 horas por semana', 'Más de 10 horas por semana', 'Ni idea'] },
-      { id: 'afterHours', step: 2, kind: 'one', q: '¿Qué pasa cuando llega una solicitud de reserva fuera de horario?', options: ['Va al contestador', 'Respondemos al día siguiente', 'La resuelve la reserva online o una respuesta automática', 'Normalmente se pierde'] },
-      { id: 'software', step: 2, kind: 'many', q: '¿Qué plataformas de software usan actualmente?', options: ['OpenTable', 'Resy', 'Tock', 'SevenRooms', 'Yelp Guest Manager', 'Toast', 'Square', 'Clover', 'Ninguna', 'Otra'] },
-      { id: 'frustration', step: 2, kind: 'text', q: '¿Qué es lo más frustrante de gestionar la comunicación con los clientes?', options: [] },
-      { id: 'invested', step: 2, kind: 'one', q: '¿Han invertido antes en automatización o soluciones digitales?', options: ['Sí, y funcionó', 'Sí, pero no dio resultado', 'No, pero estamos abiertos', 'No, y no estamos seguros'] },
+      { id: 'trade', step: 0, kind: 'one', required: true, q: '¿En qué rubro trabaja tu negocio?', options: ['Climatización (HVAC)', 'Plomería', 'Electricidad', 'Techos', 'Paisajismo', 'Pintura', 'Remodelaciones', 'Construcción general', 'Otro'] },
+      { id: 'niche', step: 0, kind: 'text', required: true, q: 'Escribe el sector o nicho de tu negocio', showIf: { id: 'trade', values: [8] } },
+      { id: 'team', step: 0, kind: 'one', required: true, q: '¿Cuántas personas trabajan directamente en tu empresa (incluyéndote)?', options: ['1 (trabajo solo)', '2–5 empleados', '5–20 empleados', 'Más de 20'] },
+      { id: 'years', step: 0, kind: 'one', required: true, q: '¿Cuántos años lleva tu negocio?', options: ['Menos de 1 año', '1–3 años', '4–10 años', 'Más de 10 años'] },
+      { id: 'salesScore', step: 0, kind: 'scale', required: true, q: '¿Qué tan sólido crees que es tu proceso de ventas en general, siendo 10 el mejor?' },
+      { id: 'leadTracking', step: 1, kind: 'one', required: true, q: '¿Cómo registras hoy los contactos entrantes?', options: ['Tengo a alguien que lo hace para la empresa', 'Planillas (Excel/Google Sheets)', 'Email/mensajes de texto', 'Software especializado (CRM)', 'No los registro formalmente'] },
+      { id: 'trackingBrief', step: 1, kind: 'textarea', q: 'Cuéntanos brevemente qué información registras y cómo la usas', placeholder: 'Tenemos chats de WhatsApp y usamos etiquetas para separar las etapas de venta. También tenemos la facturación en nuestro sistema interno', showIf: { id: 'leadTracking', values: [0, 1, 3] } },
+      { id: 'quotes', step: 1, kind: 'one', required: true, q: '¿Cómo envías normalmente tus presupuestos a los clientes?', options: ['En persona, en papel o por llamada', 'Tengo una aplicación/web que lo hace para la empresa', 'Por email o mensaje (PDF u otro archivo)', 'En la oficina, con un sistema interno'] },
+      { id: 'challenge', step: 1, kind: 'one', required: true, q: '¿Cuál es el mayor desafío de tu operación diaria en lo que respecta a ventas?', options: ['Agendar y despachar trabajos', 'Cobrar a tiempo', 'Comunicación con clientes', 'Conseguir nuevos contactos/trabajos', 'Presupuestar justo después del contacto con el cliente', 'Llevar el control de papeles/facturas'] },
+      { id: 'channels', step: 1, kind: 'many', required: true, q: '¿Qué canales generan más consultas de clientes?', options: ['Anuncios en internet (Meta, Google, IA)', 'Publicidad en la vía pública', 'Un socio específico (gobierno o portal de referencia)', 'Orgánico (boca a boca)'] },
+      { id: 'frustration', step: 1, kind: 'text', required: true, q: '¿Qué es lo más frustrante de gestionar la comunicación con los clientes?', placeholder: 'Reprogramaciones y urgencias' },
+      { id: 'contactNote', step: 1, kind: 'note', q: 'Si quieres ayudarnos a construir un puente sólido entre contactos y clientes felices, déjanos tu contacto. Podemos hablar por email o por apps de mensajería.', text: 'Buscamos tu opinión. No vamos a cobrarte nada ni engancharte en pruebas gratuitas.' },
+      { id: 'email', step: 1, kind: 'email', q: 'Si prefieres email' },
+      { id: 'whatsapp', step: 1, kind: 'phone', q: 'Si eliges WhatsApp' },
+      { id: 'telegram', step: 1, kind: 'phone', q: 'Si eliges Telegram' },
     ],
   },
   footer: {

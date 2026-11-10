@@ -7,8 +7,10 @@ import { Arrow } from './icons';
 type Status = 'idle' | 'sending' | 'ok' | 'error';
 type Answers = Record<string, string | string[]>;
 
-const CONTACT_FIELDS = ['name', 'restaurant', 'email', 'phone', 'city'] as const;
+const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const SCALE = Array.from({ length: 11 }, (_, i) => String(i));
 
+/** Replica of the Tally survey (tally.so/r/GeKZMO): 2 pages, required questions, conditional follow-ups. */
 export default function Contact() {
   const { t, lang } = useLang();
   const c = t.contact;
@@ -21,27 +23,37 @@ export default function Contact() {
   const [status, setStatus] = useState<Status>('idle');
   const formRef = useRef<HTMLFormElement>(null);
 
-  const setOne = (id: string, v: string) => setAnswers((a) => ({ ...a, [id]: v }));
-  const toggleMany = (id: string, v: string) =>
-    setAnswers((a) => {
-      const cur = (a[id] as string[] | undefined) ?? [];
-      return { ...a, [id]: cur.includes(v) ? cur.filter((x) => x !== v) : [...cur, v] };
-    });
+  // Conditions compare option indexes, so they work the same in both languages.
+  const visible = (q: Question) => {
+    if (!q.showIf) return true;
+    const src = questions.find((x) => x.id === q.showIf!.id);
+    const v = answers[q.showIf.id];
+    const idx = src?.options?.indexOf(String(v)) ?? -1;
+    return q.showIf.values.includes(idx);
+  };
 
-  /** Native validity for inputs in the visible step + required multi-choice groups. */
+  const set = (id: string, v: string | string[]) => {
+    setAnswers((a) => ({ ...a, [id]: v }));
+    if (missing === id) setMissing(null);
+  };
+  const toggle = (id: string, v: string) => {
+    const cur = (answers[id] as string[] | undefined) ?? [];
+    set(id, cur.includes(v) ? cur.filter((x) => x !== v) : [...cur, v]);
+  };
+
   function stepIsValid(): boolean {
-    const box = formRef.current?.querySelector<HTMLElement>(`[data-step="${step}"]`);
-    const bad = box?.querySelector<HTMLInputElement | HTMLTextAreaElement>(':invalid');
+    const req = questions.find((q) => q.step === step && q.required && visible(q) && !String(answers[q.id] ?? '').trim() && !(answers[q.id] as string[] | undefined)?.length);
+    if (req) {
+      setMissing(req.id);
+      formRef.current?.querySelector<HTMLElement>(`#q-${req.id}`)?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      return false;
+    }
+    const bad = formRef.current?.querySelector<HTMLElement>(`[data-step="${step}"]`)?.querySelector<HTMLInputElement>(':invalid');
     if (bad) {
       bad.reportValidity();
       return false;
     }
-    const req = questions.find((q) => q.step === step && q.required && !((answers[q.id] as string[] | undefined)?.length));
-    setMissing(req ? req.id : null);
-    if (req) {
-      formRef.current?.querySelector<HTMLElement>(`#q-${req.id}`)?.scrollIntoView({ block: 'center', behavior: 'smooth' });
-      return false;
-    }
+    setMissing(null);
     return true;
   }
 
@@ -56,16 +68,18 @@ export default function Contact() {
     if (step < total - 1) return go(step + 1);
 
     // Keys always in English so the team reads the same labels whatever language the visitor used.
-    const en = content.en.contact;
+    const enQ = content.en.contact.questions as Question[];
     const data = new FormData();
-    for (const f of CONTACT_FIELDS) data.set(en.fields[f], String(answers[f] ?? ''));
-    (en.questions as Question[]).forEach((q, i) => {
+    let n = 0;
+    questions.forEach((q, i) => {
+      if (q.kind === 'note') return;
+      n++;
       const v = answers[q.id];
-      data.set(`${i + 1}. ${q.q}`, Array.isArray(v) ? v.join(', ') : (v ?? ''));
+      data.set(`${n}. ${enQ[i].q}`, visible(q) ? (Array.isArray(v) ? v.join(', ') : (v ?? '')) : '');
     });
     data.set('language', lang);
-    data.set('_replyto', String(answers.email ?? ''));
-    data.set('_subject', `Restaurant review request: ${answers.restaurant ?? ''}`);
+    if (answers.email) data.set('_replyto', String(answers.email));
+    data.set('_subject', `Survey response: ${answers.niche || answers.trade || ''}`);
 
     setStatus('sending');
     try {
@@ -79,64 +93,104 @@ export default function Contact() {
     }
   }
 
-  const text = (id: (typeof CONTACT_FIELDS)[number], type = 'text', required = false, autoComplete?: string) => (
-    <label className="field">
-      <input
-        name={id}
-        type={type}
-        required={required}
-        autoComplete={autoComplete}
-        placeholder=" "
-        value={String(answers[id] ?? '')}
-        onChange={(e) => setOne(id, e.target.value)}
-      />
-      <span>{c.fields[id]}</span>
-    </label>
+  const err = (q: Question) =>
+    missing === q.id && (
+      <p className="survey-error" role="alert">
+        {c.required}
+      </p>
+    );
+
+  const title = (q: Question) => (
+    <>
+      {q.q}
+      {q.required && <i className="survey-req" aria-hidden="true"> *</i>}
+    </>
   );
 
   const renderQuestion = (q: Question) => {
-    if (q.kind === 'text')
-      return (
-        <label key={q.id} id={`q-${q.id}`} className="field survey-q">
-          <textarea name={q.id} rows={3} placeholder=" " value={String(answers[q.id] ?? '')} onChange={(e) => setOne(q.id, e.target.value)} />
-          <span>{q.q}</span>
-        </label>
-      );
-    const many = q.kind === 'many';
+    if (!visible(q)) return null;
     const cur = answers[q.id];
-    return (
-      <fieldset key={q.id} id={`q-${q.id}`} className={`interest survey-q ${missing === q.id ? 'is-missing' : ''}`}>
-        <legend>
-          {q.q}
-          <small>{many ? c.pickMany : c.pickOne}</small>
-        </legend>
-        <div className="interest-chips">
-          {q.options.map((o) => {
-            const on = many ? ((cur as string[] | undefined) ?? []).includes(o) : cur === o;
-            return (
-              <label key={o} className={`choice ${on ? 'is-on' : ''}`}>
-                <input
-                  type={many ? 'checkbox' : 'radio'}
-                  name={q.id}
-                  value={o}
-                  checked={on}
-                  onChange={() => {
-                    if (many) toggleMany(q.id, o);
-                    else setOne(q.id, o);
-                    if (missing === q.id) setMissing(null);
-                  }}
-                />
-                <span>{o}</span>
-              </label>
-            );
-          })}
+
+    if (q.kind === 'note')
+      return (
+        <div key={q.id} className="survey-note">
+          <h3>{q.q}</h3>
+          {q.text && <p>{q.text}</p>}
         </div>
-        {missing === q.id && (
-          <p className="survey-error" role="alert">
-            {c.required}
-          </p>
+      );
+
+    if (q.kind === 'one' || q.kind === 'many') {
+      const many = q.kind === 'many';
+      return (
+        <fieldset key={q.id} id={`q-${q.id}`} className={`survey-q ${missing === q.id ? 'is-missing' : ''}`}>
+          <legend>
+            <span>{title(q)}</span>
+            {many && <small>{c.pickMany}</small>}
+          </legend>
+          <div className="survey-options">
+            {q.options!.map((o, i) => {
+              const on = many ? ((cur as string[] | undefined) ?? []).includes(o) : cur === o;
+              return (
+                <label key={o} className={`option ${on ? 'is-on' : ''}`}>
+                  <input type={many ? 'checkbox' : 'radio'} name={q.id} value={o} checked={on} onChange={() => (many ? toggle(q.id, o) : set(q.id, o))} />
+                  <b aria-hidden="true">{LETTERS[i]}</b>
+                  <span>{o}</span>
+                </label>
+              );
+            })}
+          </div>
+          {err(q)}
+        </fieldset>
+      );
+    }
+
+    if (q.kind === 'scale')
+      return (
+        <fieldset key={q.id} id={`q-${q.id}`} className={`survey-q ${missing === q.id ? 'is-missing' : ''}`}>
+          <legend>
+            <span>{title(q)}</span>
+          </legend>
+          <div className="survey-scale">
+            {SCALE.map((v) => (
+              <label key={v} className={`scale-btn ${cur === v ? 'is-on' : ''}`}>
+                <input type="radio" name={q.id} value={v} checked={cur === v} onChange={() => set(q.id, v)} />
+                <span>{v}</span>
+              </label>
+            ))}
+          </div>
+          <div className="survey-scale-legend" aria-hidden="true">
+            <span>{c.scaleLow}</span>
+            <span>{c.scaleHigh}</span>
+          </div>
+          {err(q)}
+        </fieldset>
+      );
+
+    const type = q.kind === 'email' ? 'email' : q.kind === 'phone' ? 'tel' : 'text';
+    const common = {
+      id: `in-${q.id}`,
+      name: q.id,
+      placeholder: q.placeholder ?? '',
+      value: String(cur ?? ''),
+    };
+    return (
+      <div key={q.id} id={`q-${q.id}`} className={`survey-q ${missing === q.id ? 'is-missing' : ''}`}>
+        <label className="survey-label" htmlFor={common.id}>
+          {title(q)}
+        </label>
+        {q.kind === 'textarea' ? (
+          <textarea {...common} rows={4} className="survey-input" onChange={(e) => set(q.id, e.target.value)} />
+        ) : (
+          <input
+            {...common}
+            type={type}
+            className="survey-input"
+            autoComplete={q.kind === 'email' ? 'email' : q.kind === 'phone' ? 'tel' : 'off'}
+            onChange={(e) => set(q.id, e.target.value)}
+          />
         )}
-      </fieldset>
+        {err(q)}
+      </div>
     );
   };
 
@@ -161,12 +215,14 @@ export default function Contact() {
 
         <form ref={formRef} className="card contact-form survey" onSubmit={onSubmit} noValidate data-reveal style={{ ['--d' as string]: '120ms' }}>
           {status === 'ok' ? (
-            <p className="form-status is-ok survey-done" role="status">
-              {c.ok}
-            </p>
+            <div className="survey-done" role="status">
+              <p>{c.ok}</p>
+              <p className="survey-sign">{c.signature}</p>
+            </div>
           ) : (
             <>
               <div className="survey-head">
+                <h3 className="survey-title">{c.surveyTitle}</h3>
                 <p className="survey-step">
                   {c.stepLabel} {step + 1} {c.of} {total} · <strong>{c.steps[step]}</strong>
                 </p>
@@ -178,17 +234,11 @@ export default function Contact() {
               {c.steps.map((_, i) => (
                 <div key={i} data-step={i} className="survey-step-body" hidden={i !== step}>
                   {i === 0 && (
-                    <>
-                      <div className="field-row">
-                        {text('name', 'text', true, 'name')}
-                        {text('restaurant', 'text', true, 'organization')}
-                      </div>
-                      <div className="field-row">
-                        {text('email', 'email', true, 'email')}
-                        {text('phone', 'tel', false, 'tel')}
-                      </div>
-                      {text('city', 'text', false, 'address-level2')}
-                    </>
+                    <div className="survey-intro">
+                      {c.intro.map((p) => (
+                        <p key={p}>{p}</p>
+                      ))}
+                    </div>
                   )}
                   {questions.filter((q) => q.step === i).map(renderQuestion)}
                 </div>
